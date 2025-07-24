@@ -34,7 +34,7 @@ Paginated views to be implemented for clients, items, and user order history, en
  prices from the database).  
 	If a submitted price or quantity doesn’t match expected ranges or data, reject the request and flag the user.
 
-⤷ **Power BI Dashboard Integration**  
+⤷ **Power BI Dashboard Integration**:  
   → **Order Trends Dashboard**: Visualize purchasing behavior and product popularity over time.  
   → **Access Analytics Dashboard**: Track who logs in, when, and for how long.  
   → Secure dashboard access based on user roles(to be seen?)  
