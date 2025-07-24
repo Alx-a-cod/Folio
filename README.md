@@ -11,10 +11,10 @@ The work here is exploratory in nature — driven by curiosity, refined over tim
 
 Projects in this repository vary in scope and domain, but commonly emphasize:
 
-- 👁⃤  **Design clarity** — modularity, separation of concerns, and expressive architecture
-- ദ്ദി/ᐠ｡‸｡ᐟ\ **Code quality** — testability, readability, and adherence to clean code principles
-- ⚙ **Feature evolution** — incremental development with thoughtful expansion
-- 🕮 **Learning in motion** —‧₊⋅ applying new tools, libraries, and paradigms as needed
+- ‧₊⋅ 👁⃤  ‧₊⋅  **Design clarity** — modularity, separation of concerns, and expressive architecture
+- ‧₊⋅ ദ്ദി/ᐠ｡‸｡ᐟ\ ‧₊⋅  **Code quality** — testability, readability, and adherence to clean code principles
+- ‧₊⋅ ⚙ ‧₊⋅  **Feature evolution** — incremental development with thoughtful expansion
+- ‧₊⋅ 🕮 ‧₊⋅ **Learning in motion** —‧₊⋅ applying new tools, libraries, and paradigms as needed
 
 ## Status ── ⟢ ・⸝⸝
 
