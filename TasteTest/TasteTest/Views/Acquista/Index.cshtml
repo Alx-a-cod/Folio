@@ -1,0 +1,231 @@
+﻿@{
+    ViewData["Title"] = "Acquisto Prodotti";
+    var clienti = ViewBag.Clienti as List<Cliente>;
+    var prodotti = ViewBag.Prodotti as List<Prodotti>;
+}
+
+<h4 class="mb-4">Acquisto Prodotti</h4>
+
+<!-- jQuery CDN - deve venire prima di tutto -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Select2 (può restare sotto) -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
+<!-- STILE -->
+<style>
+    .select2-selection__placeholder {
+        color: #999 !important;
+        font-style: italic;
+    }
+</style>
+
+<div class="container mt-4">
+    <!-- Cliente -->
+    <div class="form-group mb-4">
+        <label for="clienteSelect">Seleziona Cliente</label>
+        <select id="clienteSelect" class="form-control select2 w-50">
+            <option value="" disabled selected class="text-muted">-- Seleziona un cliente --</option>
+            @foreach (var cliente in clienti)
+            {
+                <option value="@cliente.IDCliente">@cliente.Cognome @cliente.Nome</option>
+            }
+        </select>
+        
+    </div>
+
+    <!-- Prodotto -->
+    <div class="form-group mb-4">
+        <label for="prodottoSelect">Seleziona Prodotto</label>
+        <select id="prodottoSelect" class="form-control select2 w-50">
+            <option value="" disabled selected class="text-muted">-- Seleziona un prodotto --</option>
+            @foreach (var prod in prodotti)
+            {
+                <option value="@prod.IDProdotto">@prod.Descrizione</option>
+            }
+        </select>
+    </div>
+
+    <!-- Prezzo Visualizzato -->
+    <div class="form-group mb-4">
+        <span id="prezzoDisplay" class="badge badge-info" style="display: none;"></span>
+    </div>
+
+    <!-- Quantità -->
+    <div class="form-group">
+        <label for="quantita">Quantità</label>
+        <input type="number" id="quantita" class="form-control w-25" required min="1" max="999" step="1" value="1" />
+        <div class="invalid-feedback">Inserisci un numero valido tra 1 e 999.</div>
+    </div>
+
+    <!-- Aggiungi -->
+    <button type="button" id="inserisciBtn" class="btn btn-primary mt-3">Inserisci</button>
+
+    <!-- Tabella Ordine -->
+    <h4 class="mt-4">Dettaglio Ordine</h4>
+    <table id="tabellaOrdine" class="table table-striped">
+        <thead>
+            <tr>
+                <th>Prodotto</th>
+                <th>Prezzo Unitario</th>
+                <th>Quantità</th>
+                <th>Totale</th>
+                <th>Azione</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <!-- Bottoni -->
+    <button type="button" id="annullaBtn" class="btn btn-secondary">Annulla</button>
+    <button type="button" id="inviaBtn" class="btn btn-success">Invia Ordine</button>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $('.select2').select2();
+        let clienteSelezionato = null;
+        let ordine = [];
+        let prezzoCorrente = null;
+
+        // Validazione quantità
+        const quantitaInput = document.getElementById('quantita');
+        quantitaInput.addEventListener('input', function () {
+            let value = this.value.replace(/[^0-9]/g, '');
+            value = value.slice(0, 3);
+            let numero = parseInt(value, 10);
+            this.value = (numero < 1 || isNaN(numero)) ? '' : (numero > 999 ? 999 : numero);
+        });
+        quantitaInput.addEventListener('keydown', function (e) {
+            if (['e', 'E', '+', '-', '.'].includes(e.key)) e.preventDefault();
+        });
+
+        // Recupera prezzo
+        function aggiornaPrezzoProdotto(prodottoId) {
+            prezzoCorrente = null;
+            return $.ajax({
+                url: "/Acquista/GetPrezzoProdotto",
+                method: "GET",
+                data: { idProdotto: prodottoId },
+                success: function (response) {
+                    if (response.success) {
+                        prezzoCorrente = response.prezzo;
+                        $("#prezzoDisplay").text(`Prezzo: ${prezzoCorrente} €`);
+                    } else {
+                        alert("Errore nel recupero del prezzo.");
+                    }
+                },
+                error: function () {
+                    alert("Errore nel recupero del prezzo.");
+                }
+            });
+        } // ← Questa graffa chiude correttamente la funzione
+
+        // Cambia prodotto
+        $("#prodottoSelect").change(function () {
+            const prodottoId = $(this).val();
+            if (prodottoId) aggiornaPrezzoProdotto(prodottoId);
+        });
+
+        // Inserisci prodotto
+        $("#inserisciBtn").click(function () {
+            const clienteId = $("#clienteSelect").val();
+            const prodottoId = $("#prodottoSelect").val();
+            const prodottoText = $("#prodottoSelect option:selected").text();
+            const quantita = parseInt($("#quantita").val(), 10);
+
+            if (!clienteId || !prodottoId || !quantita) {
+                alert("Seleziona cliente, prodotto e quantità valida.");
+                return;
+            }
+
+            if (!clienteSelezionato) {
+                clienteSelezionato = clienteId;
+                $("#clienteSelect").prop("disabled", true);
+            } else if (clienteSelezionato !== clienteId) {
+                alert("Ordine solo per un cliente alla volta.");
+                return;
+            }
+
+            if (prezzoCorrente === null) {
+                aggiornaPrezzoProdotto(prodottoId).done(() => {
+                    if (prezzoCorrente != null)
+                        aggiungiProdotto(prodottoId, prodottoText, quantita, prezzoCorrente);
+                });
+            } else {
+                aggiungiProdotto(prodottoId, prodottoText, quantita, prezzoCorrente);
+            }
+        });
+
+        // Aggiungi alla tabella
+        function aggiungiProdotto(prodottoId, prodottoText, quantita, prezzo) {
+            const totale = (prezzo * quantita).toFixed(2);
+            const newRow = `
+                <tr data-id="${prodottoId}">
+                    <td>${prodottoText}</td>
+                    <td>${prezzo} €</td>
+                    <td>${quantita}</td>
+                    <td>${totale} €</td>
+                    <td><button class="btn btn-danger rimuoviBtn">Rimuovi</button></td>
+                </tr>`;
+            $("#tabellaOrdine tbody").append(newRow);
+            ordine.push({ prodottoId, quantita, prezzo, totale: Number(totale) });
+            $("#quantita").val("1");
+        }
+
+        // Rimuovi prodotto
+        $(document).on("click", ".rimuoviBtn", function () {
+            const row = $(this).closest("tr");
+            const prodottoId = row.data("id");
+            ordine = ordine.filter(p => p.prodottoId != prodottoId);
+            row.remove();
+        });
+
+        // Annulla ordine
+        $("#annullaBtn").click(function () {
+            clienteSelezionato = null;
+            ordine = [];
+            prezzoCorrente = null;
+            $("#clienteSelect").prop("disabled", false).val("").trigger("change");
+            $("#tabellaOrdine tbody").empty();
+            $("#prezzoDisplay").text("");
+        });
+
+        // Invia ordine
+        $("#inviaBtn").click(function () {
+            debugger; 
+            if (ordine.length === 0) {
+                alert("Carrello vuoto.");
+                return;
+            }
+
+            console.log("Invio ordine in corso...");
+
+            $.ajax({
+                url: "/Acquista/CompletaOrdine",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    ClienteId: clienteSelezionato,
+                    Prodotti: ordine
+                }),
+                success: function (response) {
+                    if (response.success) {
+                        alert("Ordine completato con successo.");
+                        location.reload();
+                         console.log("Risposta ricevuta:", response);
+                    } else {
+                        alert("Errore: " + response.message);
+                        console.error("Errore AJAX:", xhr.responseText);
+                    }
+                },
+                error: function (xhr) {
+                    alert("Errore di rete: " + xhr.responseText);
+                }
+            });
+        });
+    });
+
+</script>

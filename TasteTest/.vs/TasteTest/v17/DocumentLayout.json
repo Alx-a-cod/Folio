@@ -1,0 +1,154 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "G:\\RepositoryLocal_cuteGitproj\\TasteTest\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{97C88DDD-5EEF-4F35-BEDC-3B72E415F0F3}|TasteTest\\TasteTest.csproj|g:\\repositorylocal_cutegitproj\\tastetest\\tastetest\\views\\acquista\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{97C88DDD-5EEF-4F35-BEDC-3B72E415F0F3}|TasteTest\\TasteTest.csproj|solutionrelative:tastetest\\views\\acquista\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97C88DDD-5EEF-4F35-BEDC-3B72E415F0F3}|TasteTest\\TasteTest.csproj|g:\\repositorylocal_cutegitproj\\tastetest\\tastetest\\views\\prodotti\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{97C88DDD-5EEF-4F35-BEDC-3B72E415F0F3}|TasteTest\\TasteTest.csproj|solutionrelative:tastetest\\views\\prodotti\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97C88DDD-5EEF-4F35-BEDC-3B72E415F0F3}|TasteTest\\TasteTest.csproj|g:\\repositorylocal_cutegitproj\\tastetest\\tastetest\\services\\orderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{97C88DDD-5EEF-4F35-BEDC-3B72E415F0F3}|TasteTest\\TasteTest.csproj|solutionrelative:tastetest\\services\\orderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97C88DDD-5EEF-4F35-BEDC-3B72E415F0F3}|TasteTest\\TasteTest.csproj|g:\\repositorylocal_cutegitproj\\tastetest\\tastetest\\utility\\dblayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{97C88DDD-5EEF-4F35-BEDC-3B72E415F0F3}|TasteTest\\TasteTest.csproj|solutionrelative:tastetest\\utility\\dblayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97C88DDD-5EEF-4F35-BEDC-3B72E415F0F3}|TasteTest\\TasteTest.csproj|g:\\repositorylocal_cutegitproj\\tastetest\\tastetest\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{97C88DDD-5EEF-4F35-BEDC-3B72E415F0F3}|TasteTest\\TasteTest.csproj|solutionrelative:tastetest\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97C88DDD-5EEF-4F35-BEDC-3B72E415F0F3}|TasteTest\\TasteTest.csproj|g:\\repositorylocal_cutegitproj\\tastetest\\tastetest\\wwwroot\\assets\\css\\font-awesome.min.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{97C88DDD-5EEF-4F35-BEDC-3B72E415F0F3}|TasteTest\\TasteTest.csproj|solutionrelative:tastetest\\wwwroot\\assets\\css\\font-awesome.min.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97C88DDD-5EEF-4F35-BEDC-3B72E415F0F3}|TasteTest\\TasteTest.csproj|g:\\repositorylocal_cutegitproj\\tastetest\\tastetest\\views\\clienti\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{97C88DDD-5EEF-4F35-BEDC-3B72E415F0F3}|TasteTest\\TasteTest.csproj|solutionrelative:tastetest\\views\\clienti\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97C88DDD-5EEF-4F35-BEDC-3B72E415F0F3}|TasteTest\\TasteTest.csproj|g:\\repositorylocal_cutegitproj\\tastetest\\tastetest\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{97C88DDD-5EEF-4F35-BEDC-3B72E415F0F3}|TasteTest\\TasteTest.csproj|solutionrelative:tastetest\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 7,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DBLayer.cs",
+              "DocumentMoniker": "G:\\RepositoryLocal_cuteGitproj\\TasteTest\\TasteTest\\Utility\\DBLayer.cs",
+              "RelativeDocumentMoniker": "TasteTest\\Utility\\DBLayer.cs",
+              "ToolTip": "G:\\RepositoryLocal_cuteGitproj\\TasteTest\\TasteTest\\Utility\\DBLayer.cs",
+              "RelativeToolTip": "TasteTest\\Utility\\DBLayer.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-09T20:53:22.76Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "OrderService.cs",
+              "DocumentMoniker": "G:\\RepositoryLocal_cuteGitproj\\TasteTest\\TasteTest\\Services\\OrderService.cs",
+              "RelativeDocumentMoniker": "TasteTest\\Services\\OrderService.cs",
+              "ToolTip": "G:\\RepositoryLocal_cuteGitproj\\TasteTest\\TasteTest\\Services\\OrderService.cs",
+              "RelativeToolTip": "TasteTest\\Services\\OrderService.cs",
+              "ViewState": "AgIAAIIAAAAAAAAAAAAwwD8AAAB8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-09T21:14:55.887Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "font-awesome.min.css",
+              "DocumentMoniker": "G:\\RepositoryLocal_cuteGitproj\\TasteTest\\TasteTest\\wwwroot\\assets\\css\\font-awesome.min.css",
+              "RelativeDocumentMoniker": "TasteTest\\wwwroot\\assets\\css\\font-awesome.min.css",
+              "ToolTip": "G:\\RepositoryLocal_cuteGitproj\\TasteTest\\TasteTest\\wwwroot\\assets\\css\\font-awesome.min.css",
+              "RelativeToolTip": "TasteTest\\wwwroot\\assets\\css\\font-awesome.min.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAD5JQAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-07-09T21:08:08.411Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "G:\\RepositoryLocal_cuteGitproj\\TasteTest\\TasteTest\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "TasteTest\\Views\\Home\\Index.cshtml",
+              "ToolTip": "G:\\RepositoryLocal_cuteGitproj\\TasteTest\\TasteTest\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "TasteTest\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAFEAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-09T20:49:40.567Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "G:\\RepositoryLocal_cuteGitproj\\TasteTest\\TasteTest\\Views\\Prodotti\\Index.cshtml",
+              "RelativeDocumentMoniker": "TasteTest\\Views\\Prodotti\\Index.cshtml",
+              "ToolTip": "G:\\RepositoryLocal_cuteGitproj\\TasteTest\\TasteTest\\Views\\Prodotti\\Index.cshtml",
+              "RelativeToolTip": "TasteTest\\Views\\Prodotti\\Index.cshtml",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAgwDoAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-09T20:34:01.795Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "G:\\RepositoryLocal_cuteGitproj\\TasteTest\\TasteTest\\Views\\Clienti\\Index.cshtml",
+              "RelativeDocumentMoniker": "TasteTest\\Views\\Clienti\\Index.cshtml",
+              "ToolTip": "G:\\RepositoryLocal_cuteGitproj\\TasteTest\\TasteTest\\Views\\Clienti\\Index.cshtml",
+              "RelativeToolTip": "TasteTest\\Views\\Clienti\\Index.cshtml",
+              "ViewState": "AgIAAMQAAAAAAAAAAAAgwM0AAABgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-09T20:31:27.118Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "G:\\RepositoryLocal_cuteGitproj\\TasteTest\\TasteTest\\Views\\Acquista\\Index.cshtml",
+              "RelativeDocumentMoniker": "TasteTest\\Views\\Acquista\\Index.cshtml",
+              "ToolTip": "G:\\RepositoryLocal_cuteGitproj\\TasteTest\\TasteTest\\Views\\Acquista\\Index.cshtml",
+              "RelativeToolTip": "TasteTest\\Views\\Acquista\\Index.cshtml",
+              "ViewState": "AgIAAJAAAAAAAAAAAAAAAEEAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-09T20:16:53.621Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "G:\\RepositoryLocal_cuteGitproj\\TasteTest\\TasteTest\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "TasteTest\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "G:\\RepositoryLocal_cuteGitproj\\TasteTest\\TasteTest\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "TasteTest\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAEsAAAAAAAAAAAAAAFIAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-09T13:46:56.441Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

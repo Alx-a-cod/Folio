@@ -1,0 +1,39 @@
+﻿@model TasteTest.Services.DettaglioOrdineViewModel
+
+<div>
+    <div class="sirio-table-responsive">
+        <table class="sirio-table sirio-table" id="table1">
+            <thead>
+                <tr>
+                    <th>Prodotto</th>
+                    <th>Quantità</th>
+                    <th>Prezzo Unitario</th>
+                    <th>Totale Ordine</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var p in Model.Prodotti)
+                {
+                    <tr>
+                        <td>@p.NomeProdotto</td>
+                        <td>@p.Quantita</td>
+                        <td>@p.PrezzoUnitario.ToString("F2") €</td>
+                        <td>@((p.Quantita * p.PrezzoUnitario).ToString("F2")) €</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @*<!-- Testo sotto la tabella 
+
+    <°)))>< sarebbe carino da inserire a vista 
+    
+    -->
+    <!-- Dettagli Cliente -->
+    <div class="sirio-spacing-top-32 mt-4" style="font-family: 'Titillium Web', sans-serif; font-weight: 300; font-size: 0.95rem;">
+        <p class="mb-1"><strong>Ordine effettuato da:</strong> @Model.Cliente.Nome @Model.Cliente.Cognome</p>
+        <p class="mb-0"><strong>Email:</strong> @Model.Cliente.Email</p>
+    </div> *@
+
+</div>

@@ -1,0 +1,258 @@
+﻿@model IEnumerable<TasteTest.Models.ClientiViewModel>
+@{
+    ViewData["Title"] = "Gestione Clienti";
+}
+
+@* <!-- Bootstrap + Select2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+
+<!-- jQuery + Bootstrap JS + Select2 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script> *@
+
+<h4 class="mb-4">Aggiungi / Modifica Cliente</h4>
+
+<form id="clienteForm">
+    <input type="hidden" id="IDCliente" name="IDCliente" />
+
+    <div class="form-group">
+        <label for="Nome">Nome</label>
+        <input type="text" class="form-control" id="Nome" name="Nome" required />
+        <span class="text-danger" id="errorNome"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="Cognome">Cognome</label>
+        <input type="text" class="form-control" id="Cognome" name="Cognome" required />
+        <span class="text-danger" id="errorCognome"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="Email">Email</label>
+        <input type="email" class="form-control" id="Email" name="Email" required />
+        <span class="text-danger" id="errorEmail"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Salva</button>
+    <button type="reset" class="btn btn-secondary mt-3" id="resetForm">Annulla</button>
+</form>
+
+<hr />
+
+<h4 class="mb-4">Riepilogo Clienti</h4>
+
+<div class="sirio-table-responsive">
+    <table class="sirio-table sirio-table-dark" id="clientiTable">
+        <thead>
+            <tr>
+                <th hidden>ID</th>
+                <th>Nome</th>
+                <th>Cognome</th>
+                <th>Email</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+        <tbody id="clientiTableBody">
+            @foreach (var cliente in Model ?? Enumerable.Empty<TasteTest.Models.ClientiViewModel>())
+            {
+                <tr>
+                    <td class="cliente-id" hidden>@cliente.IDCliente</td>
+                    <td>@cliente.Nome</td>
+                    <td>@cliente.Cognome</td>
+                    <td>@cliente.Email</td>
+                    <td>
+                        <button type="button" class="sirio-btn sirio-btn-warning p-2" title="Modifica">
+                            <i class="fa-regular color: #567C8D;fa-pen-to-square fa-24" style="color: #567C8D;"></i>
+                        </button>
+                        <button type="button" class="sirio-btn sirio-btn-danger p-2" title="Elimina">
+                            <i class="fa-solid fa-trash fa-24"></i>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function clearErrors() {
+        document.getElementById("errorNome").textContent = "";
+        document.getElementById("errorCognome").textContent = "";
+        document.getElementById("errorEmail").textContent = "";
+    }
+
+     function validateEmail(email) {
+          const regex = /^\w+([\.-]?\w+)@@\w+([\.-]?\w+)(\.\w{2,})$/;;
+         return regex.test(email);
+    }
+
+    async function validateEmailField() {
+        const emailInput = document.getElementById("Email");
+        const email = emailInput.value.trim();
+        const errorSpan = document.getElementById("errorEmail");
+        errorSpan.textContent = "";
+
+        const idCliente = parseInt(document.getElementById("IDCliente").value) || 0;
+
+        if (!email) {
+            errorSpan.textContent = "L'email è obbligatoria";
+            return false;
+        }
+
+        if (!validateEmail(email)) {
+            errorSpan.textContent = "Email non valida";
+            return false;
+        }
+
+        try {
+            const response = await fetch('/Clienti/ValidateEmail', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ Email: email, IDCliente: idCliente })
+            });
+
+            if (!response.ok) {
+                errorSpan.textContent = "Errore nel controllo email";
+                return false;
+            }
+
+            const result = await response.json();
+            if (!result.isValid) {
+                errorSpan.textContent = "Questa email è già in uso";
+                return false;
+            }
+        } catch {
+            errorSpan.textContent = "Errore di rete durante la validazione";
+            return false;
+        }
+
+        return true;
+    }
+
+    async function validateForm() {
+        let valid = true;
+        if (!document.getElementById("Nome").value.trim()) {
+            document.getElementById("errorNome").textContent = "Il nome è obbligatorio";
+            valid = false;
+        }
+
+        if (!document.getElementById("Cognome").value.trim()) {
+            document.getElementById("errorCognome").textContent = "Il cognome è obbligatorio";
+            valid = false;
+        }
+
+        if (!await validateEmailField()) valid = false;
+
+        return valid;
+    }
+
+    function attachButtonListeners() {
+        document.querySelectorAll(".sirio-btn-warning").forEach(button => {
+            button.addEventListener("click", function () {
+                const row = this.closest("tr");
+                document.getElementById("IDCliente").value = row.querySelector(".cliente-id").textContent.trim();
+                document.getElementById("Nome").value = row.cells[1].textContent.trim();
+                document.getElementById("Cognome").value = row.cells[2].textContent.trim();
+                document.getElementById("Email").value = row.cells[3].textContent.trim();
+                clearErrors();
+
+                // SCROLL AL FORM
+                document.getElementById("clienteForm").scrollIntoView({ behavior: "smooth", block: "start" });
+            });
+        });
+
+        document.querySelectorAll(".sirio-btn-danger").forEach(button => {
+            button.addEventListener("click", async function () {
+                const row = this.closest("tr");
+                const clienteId = parseInt(row.querySelector(".cliente-id").textContent.trim(), 10);
+
+                if (confirm("Sei sicuro di voler eliminare questo cliente?")) {
+                    const res = await fetch('/Clienti/Delete', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(clienteId)
+                    });
+
+                    if (res.ok) {
+                        alert("Cliente eliminato con successo!");
+                        location.reload();
+                    } else {
+                        alert("Errore durante l'eliminazione");
+                    }
+                }
+            });
+        });
+    }
+
+    function aggiornaTabellaCliente(cliente) {
+        const tbody = document.getElementById("clientiTableBody");
+        let row = [...tbody.rows].find(r => parseInt(r.querySelector(".cliente-id").textContent.trim()) === cliente.idCliente);
+
+        if (row) {
+            row.cells[1].textContent = cliente.nome;
+            row.cells[2].textContent = cliente.cognome;
+            row.cells[3].textContent = cliente.email;
+        } else {
+            row = document.createElement("tr");
+            row.innerHTML = `
+                <td class="cliente-id" hidden>${cliente.idCliente}</td>
+                <td>${cliente.nome}</td>
+                <td>${cliente.cognome}</td>
+                <td>${cliente.email}</td>
+                <td>
+                    <button type="button" class="sirio-btn sirio-btn-warning p-2" title="Modifica">
+                            <i class="fa-regular fa-pen-to-square" fa-24 style="color: #567C8D;"></i>
+                        </button>
+                        <button type="button" class="sirio-btn sirio-btn-danger p-2" title="Elimina">
+                            <i class="fa-solid fa-trash fa-24"></i>
+                </td>`;
+            tbody.appendChild(row);
+        }
+
+        attachButtonListeners();
+        row.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    window.onload = () => {
+        attachButtonListeners();
+
+        document.getElementById("clienteForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
+            clearErrors();
+
+            if (!await validateForm()) return;
+
+            const cliente = {
+                IDCliente: parseInt(document.getElementById("IDCliente").value) || 0,
+                Nome: document.getElementById("Nome").value.trim(),
+                Cognome: document.getElementById("Cognome").value.trim(),
+                Email: document.getElementById("Email").value.trim()
+            };
+
+            const res = await fetch('/Clienti/CreateorUpdate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(cliente)
+            });
+
+            if (res.ok) {
+                const updatedCliente = await res.json();
+                aggiornaTabellaCliente(updatedCliente);
+                this.reset();
+                alert("Cliente salvato con successo!");
+            } else {
+                const text = await res.text();
+                alert("Errore nel salvataggio cliente: " + text);
+            }
+        });
+
+        document.getElementById("resetForm").addEventListener("click", () => {
+            document.getElementById("clienteForm").reset();
+            clearErrors();
+        });
+
+        document.getElementById("Email").addEventListener("blur", validateEmailField);
+    };
+</script>
