@@ -5,23 +5,23 @@ The frontend is styled with the **SIRIO UI Library**, and interactivity is handl
 
 ###### Development is done in **Visual Studio 2022**.
 
-#### Overview ──
+#### 📍 Overview ──
 
 This application offers four primary views:
 
-⤷ 👤 **Client Management (CRUD)** — Create, read, update, and delete client anagraphics, with server-side pagination.  
-⤷ 📦 **Item Management (CRUD)** — Manage inventory items.  
-⤷ 🛒 **Virtual Cart** — Users can build and submit a shopping cart.  
-⤷ ♻️ **Transactional Order Submission** — Orders are saved across multiple SQL tables using transaction logic to ensure consistency.  
+⤷  **Client Management (CRUD)** — Create, read, update, and delete client anagraphics, with server-side pagination.  
+⤷  **Item Management (CRUD)** — Manage inventory items.  
+⤷  **Virtual Cart** — Users can build and submit a shopping cart.  
+⤷  **Transactional Order Submission** — Orders are saved across multiple SQL tables using transaction logic to ensure consistency.  
 
-#### Technologies ──
+#### 📍 Technologies ──
 
 - ASP.NET Core Razor Pages (MVC Pattern)  
 - C#, JavaScript, AJAX  
 - SIRIO UI Library  
 - SQL Server (Transactional operations)  
 
-#### Roadmap (Future Plans)  ──
+#### 📍Roadmap (Future Plans)  ──
 
 ⤷ **Paginated views**:  
 Paginated views to be implemented for clients, items, and user order history, ensuring performance and scalability across large datasets.
@@ -31,8 +31,8 @@ Paginated views to be implemented for clients, items, and user order history, en
 
 ⤷ **Server-side validation**:  
  By implementing a logic differentiating between regular 'users' and 'operators'. When the 'user' submits an order or changes quantities/prices, the server must re-validate all values against trusted data (e.g., product  
- prices from the database).  
-	If a submitted price or quantity doesn’t match expected ranges or data, reject the request and flag the user.
+ prices from the database).    
+ If a submitted price or quantity doesn’t match expected ranges or data, reject the request and flag the user.
 
 ⤷ **Power BI Dashboard Integration**:  
   → **Order Trends Dashboard**: Visualize purchasing behavior and product popularity over time.  
@@ -42,8 +42,8 @@ Paginated views to be implemented for clients, items, and user order history, en
 ⤷ **Test Coverage Model**:  
  Integration of automated tests to ensure code quality, maintainability, and compliance with standards.  
 
-#### Status  ── ⟢ ・⸝⸝
+#### 📍 Status  ──
 Currently under active development — core functionalities are in place and evolving through continuous iteration.  
 
->📄 License:
->Apache 2.0 License
+#### 🔖  License ──   
+Apache 2.0 License
