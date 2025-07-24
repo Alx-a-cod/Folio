@@ -21,7 +21,7 @@ This application offers four primary views:
 - SIRIO UI Library  
 - SQL Server (Transactional operations)  
 
-#### Roadmap (Future Plans)
+#### Roadmap (Future Plans)  ──
 
 ⤷ **Paginated views**:  
 Paginated views to be implemented for clients, items, and user order history, ensuring performance and scalability across large datasets.
@@ -42,5 +42,8 @@ Paginated views to be implemented for clients, items, and user order history, en
 ⤷ **Test Coverage Model**:  
  Integration of automated tests to ensure code quality, maintainability, and compliance with standards.  
 
-#### Status  
+#### Status  ── ⟢ ・⸝⸝
 Currently under active development — core functionalities are in place and evolving through continuous iteration.  
+
+>📄 License:
+>Apache 2.0 License
