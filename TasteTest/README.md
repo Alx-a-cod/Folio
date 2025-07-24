@@ -1,4 +1,4 @@
-### TasteTest ── ⟢ ・⸝⸝
+### 𓂃 ˚ ⋆🛍️｡˚ TasteTest ── ⟢ ・⸝⸝
 
 Client-side, modular and testable management system built with **.NET 8 (ASP.NET Core Razor Pages)** using the **MVC architecture**.   
 The frontend is styled with the **SIRIO UI Library**, and interactivity is handled via **JavaScript** and **AJAX**.
