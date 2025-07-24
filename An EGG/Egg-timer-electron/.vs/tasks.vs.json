@@ -1,0 +1,10 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskLabel": "task-Egg",
+      "appliesTo": "assets/.svg/Egg.svg",
+      "type": "launch"
+    }
+  ]
+}

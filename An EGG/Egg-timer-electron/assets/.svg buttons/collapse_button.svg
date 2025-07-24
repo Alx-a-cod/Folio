@@ -1,0 +1,9 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="50" height="50">
+	<title>collapse_button</title>
+	<defs>
+		<image  width="50" height="50" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyBAMAAADsEZWCAAAAAXNSR0IB2cksfwAAABVQTFRFNTZB9e/r7+rm9e/q9e/s497b8u3pRuhpBQAAAG5JREFUeJxjZMAFGOknwyiAKfz/w6jMqAw5Moz/CeoxeAATUHiAKoOsBypHggvwmcbAxPAPISP0j4H5L4pVBuehehjfodoSeABu2ntUGcUPMBnWV8TqEWTAadrnP1C3Mf5FlVEQOE/XOMUB6CUDALP6YzOmcA28AAAAAElFTkSuQmCC"/>
+	</defs>
+	<style>
+	</style>
+	<use id="Background" href="#img1" x="0" y="0"/>
+</svg>

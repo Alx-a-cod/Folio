@@ -1,0 +1,9 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" width="320" height="320">
+	<title>Soft1</title>
+	<defs>
+		<image  width="280" height="300" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARgAAAEsBAMAAADqS7EEAAAAAXNSR0IB2cksfwAAAB5QTFRFAAAAk3FY9+rN//746cufzpNo/4Ur9U0Q1hIA/4tOlBn2HwAAAAp0Uk5TAP///////////36JFFYAAAJISURBVHic7dtRbeswFAbgDkIojMIolMIojMIdhVEYhVEohVEohVC4un6I5aPjzk1upUn+/gcrje2T76knStOn089ZehPrwOZ78jSwBqYXmF5geoHp5RdglvYoiNYEc9gGAwMDA7O0w0CCbScLBgYGZmrM/Y6QIywYGBgYmOd9jpC1HWBgYGBgupjDneCwCAYGBgbmP2LuEsHAwMBMiClXf/k3XB+BGRXBwMDAzIqphIdgauXvnggGBgYG5nGYQih955KIYGBgYObChHvxnZhS9ZxMXG7ugIGBgYEJVx/FBELoJ2u7LrCyngADAwMDM4p52RbXq4e99dy1FZXX78LDERgYGBiYAUyp8NrbEdpBTRCFngADAwMDMyAKnSDbVt/xWNujen8eegIMDAwMzE5MdkOepaz7aktdYGBgYGAOYEbT7QkwMDAwMAOiUUyZzf5zUh+OwMDAwEyNCa/GjWLqkqX9WL/wTzdnv2BgYGBgepiuKPtZcGlnbz8hqTfkCwwMDMykmKzWAKbkrucioROsGwEGBgYGZmdPOLei0ATCtlC+3w5gYGBg5sNkW563cwOidduxJOvC37Av27kVBgYGZlJMJsqSidb247ldEmZD2/jeBhgYGBiYc1Khy+rmdatSrx72lnOf7dVgYGBgZsXcLxpgvfUcZXhvZ2FgYGCmxgRRzRHbW1LgI1kHAwMDA1NFpwOsmlqg3qS/J+tgYGBgYLqsULrWD7kmE3+2o8wBAwMDAzOQ5eclpwQzEJheYHqB6QWml1+F+QsvxTgebj0z0wAAAABJRU5ErkJggg=="/>
+	</defs>
+	<style>
+	</style>
+	<use id="Background" href="#img1" x="20" y="10"/>
+</svg>

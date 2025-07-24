@@ -1,0 +1,9 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" width="320" height="320">
+	<title>Egg</title>
+	<defs>
+		<image  width="280" height="300" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARgAAAEsBAMAAADqS7EEAAAAAXNSR0IB2cksfwAAABJQTFRFAAAAk3FY9+rN//746cufzpNomzJErwAAAAZ0Uk5TAP//////enng/gAAAbVJREFUeJzt3NFtgzAUBVAyQlbIClmhY3eFrtAVWKEqH1h58mvtEEwkzv2wAgb75Oshk/gy/Z9r1jE33NyTS8M1MFlgssBkgcnyBpjr46cgmiuYzTYYGBgYmOtj05Bge5IFAwMDc2pMvyNkCwsGBgYG5vacI2R+bGBgYGBgUszmSrBZBAMDAwPzQkyXCAYGBuaEmGX2+2/zvQemVQQDAwNzVkwh7IIpI39lIhgYGBiY/TBLljXvz4oIBgYG5lyY8Cw+AjOts8HAwMDAhNlHYGo1AQYGBgZmBKa2OAIDAwMDMwKzJNQEGBgYGJhholATYGBgYGCGYZaUmgADAwMDMxZTagIMDAwMTLgQBgYGBmY/TPhpHAwMDAzM8ZhUNGcdMDAwMDCtmHJ81FM5DAwMDMxRNQEGBgYG5r52B9FtPbeLqPxZGgYGBuaEmJoovS9MHDaa6GKVSgADAwMD81EZP2W1TtfgmGBgYGDOjOkXdbFKbhUHDAwMDEwQlbzGljpgYGBgYIJo2sAqCRsTpwPAwMDAwISEZY0GW20v+IbvAAMDAwPzd1pf/PWXDZgsMFlgssBkeSvMDxNYJgB5kNeKAAAAAElFTkSuQmCC"/>
+	</defs>
+	<style>
+	</style>
+	<use id="Background" href="#img1" x="20" y="10"/>
+</svg>

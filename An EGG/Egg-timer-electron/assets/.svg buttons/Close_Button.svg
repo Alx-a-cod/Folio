@@ -1,0 +1,9 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="50" height="50">
+	<title>Close_Button</title>
+	<defs>
+		<image  width="50" height="50" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyAQMAAAAk8RryAAAAAXNSR0IB2cksfwAAAAZQTFRFNTZB9e/roSg4RwAAADdJREFUeJxjZIAARkI0+w8g+ZODML3LjuGhBBH0d8G3yjeJoH98FP7zk4o0sfYS6w8iw4XIcAYAJVJuM8VZ+28AAAAASUVORK5CYII="/>
+	</defs>
+	<style>
+	</style>
+	<use id="Background" href="#img1" x="0" y="0"/>
+</svg>

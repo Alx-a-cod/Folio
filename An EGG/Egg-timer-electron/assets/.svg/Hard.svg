@@ -1,0 +1,9 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" width="320" height="320">
+	<title>Hard</title>
+	<defs>
+		<image  width="280" height="300" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARgAAAEsBAMAAADqS7EEAAAAAXNSR0IB2cksfwAAACRQTFRFAAAAk3FY9+rN//746cufzpNo/4Ur/6I//8Y+//R//9ds/9uEViZB/QAAAAx0Uk5TAP//////////////CcRQJgAAAi9JREFUeJzt3M1twkAQBlBSglugBVqghVRJC24hLdCCW4iyB492tOuscZAi+X0HC7M/8ziNtSA+Lr9n6g0sA4v35GNgDkwvML3A9ALTyz/ATPWrJFoamMM2GBgYGJipvgwk2V5kwcDAwJwas9+RcoQFAwMDA3N9zZGy1BcYGBgYmC7mcCc4LIKBgYGB+UPMLhEMDAzMCTGl+u3n8nwHZlQEAwMDc1ZMEN6CiZ2/eiIYGBgYmPdhCqH0nbkhgoGBgTkXJj2Lv4gpu94bA/PmChgYGBiYVH0Ukwipnyz1vMRq9QQYGBgYmFHMbZ0c1dPaeO9Zi8rP79LhCAwMDAzMAKbs8NlbkdpBJIlST4CBgYGBGRClTtBaFk3gur6Kg5B5HYieAAMDAwPzIiZqbqcUftRbzTAwMDAwBzCj6fYEGBgYGJgB0SgmpqQ+EYcjMDAwMKfG3BqzBzCpXNwua5EoHMviDOQBAwMDA9PDdEWtrwWnenT7hCQeyCcYGBiYk2Jaew1gSnadi0SfiMsXDAwMDMy69f6ecK9FSz05LYvtH/UyGBgYGJi0pCSerAdE8SyeJkfN6ARRbYGBgYE5KaYlaqUlWurbe2NKzJvr0QSEgYGBOTXm3ti/yxpIi9VyXGBgYGDOjNkv2sWKtP6fAgYGBgYmiSJ/Y+s6YGBgYGCS6HKAFYlj5+0NYGBgYGBS0rHGgO3ZGBj4DDAwMDAw2+meM6fsbxswvcD0AtMLTC//CvMNZ6ckHuFGbmMAAAAASUVORK5CYII="/>
+	</defs>
+	<style>
+	</style>
+	<use id="Background" href="#img1" x="20" y="10"/>
+</svg>
