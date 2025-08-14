@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TasteTest")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+36bcb4ac6f0dd01c42633323899582daa637e662")]
 [assembly: System.Reflection.AssemblyProductAttribute("TasteTest")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TasteTest")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
