@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "744589881422",
+    "project_id": "artifact-1df78",
+    "storage_bucket": "artifact-1df78.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:744589881422:android:f7bcd3d4a4500cded8931f",
+        "android_client_info": {
+          "package_name": "com.example.artifact"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAf5m3UI3Mph8UpAKin5NkPzKMzfIfMj2A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
