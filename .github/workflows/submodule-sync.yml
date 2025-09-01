@@ -1,0 +1,28 @@
+name: Submodule Sync Checker
+
+on:
+  schedule:
+    - cron: '0 9 * * *'  # Runs daily at 09:00 CET
+  workflow_dispatch:     # Allows manual trigger
+
+jobs:
+  check-submodules:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Folio with submodules
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Update submodules to latest remote commits
+        run: |
+          git submodule update --remote
+
+      - name: Check for submodule changes
+        run: |
+          if ! git diff --quiet; then
+            echo "::warning::One or more submodules are out of sync. Please commit updated references to Folio."
+          else
+            echo "Great! All submodules are up to date."
+          fi

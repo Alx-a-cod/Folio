@@ -4,3 +4,6 @@
 [submodule "An-Egg-"]
 	path = An-Egg-
 	url = https://github.com/Alx-a-cod/An-Egg-.git
+[submodule "TasteTest"]
+	path = TasteTest
+	url = https://github.com/Alx-a-cod/TasteTest.git
