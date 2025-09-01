@@ -1,3 +1,6 @@
 [submodule "ArtiFact"]
 	path = ArtiFact
 	url = https://github.com/Alx-a-cod/ArtiFact.git
+[submodule "An-Egg-"]
+	path = An-Egg-
+	url = https://github.com/Alx-a-cod/An-Egg-.git
