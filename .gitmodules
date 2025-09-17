@@ -7,3 +7,6 @@
 [submodule "TasteTest"]
 	path = TasteTest
 	url = https://github.com/Alx-a-cod/TasteTest.git
+[submodule "CodingVault"]
+	path = CodingVault
+	url = https://github.com/Alx-a-cod/Cod-undrums_Vault.git
