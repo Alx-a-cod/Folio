@@ -43,17 +43,21 @@ jobs:
       - name: Show submodule status
         run: git submodule status
 
-      # 4️⃣ Check for submodule changes
+      # 4️⃣ Check for submodule changes (safe version, because LINUX endings, man)
       - name: Check for submodule changes
         id: check_submodules
         run: |
-          if ! git diff --quiet --submodule=log; then
+          set -e
+          CHANGES=false
+          git diff --submodule=log --exit-code || CHANGES=true
+          if [ "$CHANGES" = true ]; then
             echo "::warning::One or more submodules are out of sync!"
             git diff --submodule=log
-            echo "changes=true" >> $GITHUB_OUTPUT
           else
             echo "All submodules are up to date."
-            echo "changes=false" >> $GITHUB_OUTPUT
+          fi
+          echo "changes=$CHANGES" >> $GITHUB_OUTPUT
+
 
       # 5️⃣ Optional: commit updated submodule references
       # Keep the step: the workflow will commit and push the updated submodule references automatically.
