@@ -1,28 +1,60 @@
-name: Submodule Sync Checker
+name: Pro Submodule Sync Checker
 
 on:
   schedule:
-    - cron: '0 9 * * *'  # Runs daily at 09:00 CET
-  workflow_dispatch:     # Allows manual trigger
+    - cron: '0 9 * * *'  # Daily at 09:00 CET
+  workflow_dispatch:
 
 jobs:
   check-submodules:
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} #injected automatically as secret as github does his magic
 
     steps:
-      - name: Checkout Folio with submodules
+      # 1️⃣ Checkout Folio with submodules
+      - name: Checkout Folio
         uses: actions/checkout@v3
         with:
-          submodules: true
+          submodules: false
+          fetch-depth: 0  # Full history
 
-      - name: Update submodules to latest remote commits
+      # 2️⃣ Initialize each submodule explicitly with URL and main branch
+      - name: Init and update submodules to latest main
         run: |
-          git submodule update --remote
+          echo "Initializing submodules..."
+          git submodule add -f -b main https://github.com/Alx-a-cod/Csharp_Algoritms Csharp_Algoritms
+          git submodule add -f -b main https://github.com/Alx-a-cod/Cod-undrums_Vault CodingVault
+          git submodule add -f -b main https://github.com/Alx-a-cod/TasteTest TasteTest
+          git submodule add -f -b main https://github.com/Alx-a-cod/An-Egg- An-Egg-
+          git submodule add -f -b main https://github.com/Alx-a-cod/ArtiFact ArtiFact
+          git submodule update --init --recursive
+          git submodule foreach 'git fetch origin && git checkout origin/main'
 
+      # 3️⃣ Show submodule status
+      - name: Show submodule status
+        run: git submodule status
+
+      # 4️⃣ Check for changes
       - name: Check for submodule changes
+        id: check_submodules
         run: |
-          if ! git diff --quiet; then
-            echo "::warning::One or more submodules are out of sync. Please commit updated references to Folio."
+          if ! git diff --quiet --submodule=log; then
+            echo "::warning::One or more submodules are out of sync!"
+            git diff --submodule=log
+            echo "changes=true" >> $GITHUB_OUTPUT
           else
-            echo "Great! All submodules are up to date."
-          fi
+            echo "All submodules are up to date."
+            echo "changes=false" >> $GITHUB_OUTPUT
+
+      # 5️⃣ Optional: commit updated references, 
+      # Keep the step: the workflow will commit and push the updated submodule references automatically.
+      # Remove or disable step: the workflow only warns and logs changes, letting you commit manually.      
+      - name: Commit updated submodules
+        if: steps.check_submodules.outputs.changes == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Auto-update submodule references" || echo "No changes to commit"
+          git push origin HEAD:main || echo "Push failed (maybe branch protection)"
