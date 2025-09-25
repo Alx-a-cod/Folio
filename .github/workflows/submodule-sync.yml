@@ -5,11 +5,13 @@ on:
     - cron: '0 9 * * *'  # Daily at 09:00 CET
   workflow_dispatch:
 
+permissions:
+  contents: write  # Allows pushing commits using GITHUB_TOKEN
+
 jobs:
   check-submodules:
     runs-on: ubuntu-latest
     env:
-      PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
       PR_BRANCH: submodule-sync-update
       PR_TITLE: "Auto-update submodule references"
       PR_BODY: "This PR updates the submodules to the latest commits from main."
@@ -46,32 +48,29 @@ jobs:
           git diff --submodule=log --ignore-cr-at-eol --exit-code || CHANGES=true
           echo "changes=$CHANGES" >> $GITHUB_OUTPUT
 
-      # 5️⃣ Commit and push updates safely
+      # 5️⃣ Commit and push updates using GITHUB_TOKEN
       - name: Commit and push updates
         if: steps.check_submodules.outputs.changes == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Set remote to use PAT BEFORE pushing
-          git remote set-url origin https://x-access-token:$PAT_TOKEN@github.com/${{ github.repository }}.git
-
-          # Create or reset branch
+          # Checkout or reset branch
           git checkout -B $PR_BRANCH
           git add .
           git commit -m "$PR_TITLE" || echo "No changes to commit"
 
-          # Force push to branch (safe for automated branch)
+          # Use GITHUB_TOKEN for authentication automatically
           git push origin $PR_BRANCH --force
 
-      # 6️⃣ Create Pull Request automatically if none exists
+      # 6️⃣ Create Pull Request if none exists
       - name: Create Pull Request
         if: steps.check_submodules.outputs.changes == 'true'
         run: |
-          # Authenticate gh CLI
-          gh auth login --with-token <<< "$PAT_TOKEN"
+          # Authenticate gh CLI using GITHUB_TOKEN
+          echo $GITHUB_TOKEN | gh auth login --with-token
 
-          # Check if PR already exists for the branch
+          # Skip if PR already exists
           EXISTING_PR=$(gh pr list --head $PR_BRANCH --json number --jq '.[0].number')
           if [ -z "$EXISTING_PR" ]; then
             gh pr create \
