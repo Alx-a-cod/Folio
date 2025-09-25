@@ -3,7 +3,7 @@ name: Pro Submodule Sync Checker
 on:
   schedule:
     - cron: '0 9 * * *'  # Daily at 09:00 CET
-  workflow_dispatch:       # Manual trigger
+  workflow_dispatch:
 
 jobs:
   check-submodules:
@@ -15,14 +15,14 @@ jobs:
       PR_BODY: "This PR updates the submodules to the latest commits from main."
 
     steps:
-      # 1️ Checkout main repo without submodules
+      # 1️⃣ Checkout main repo without submodules
       - name: Checkout main repo
         uses: actions/checkout@v3
         with:
           submodules: false
           fetch-depth: 0
 
-      # 2️ Initialize submodules and fetch latest main
+      # 2️⃣ Initialize submodules and fetch latest main
       - name: Update submodules
         run: |
           submodules=("Csharp_Algoritms" "CodingVault" "TasteTest" "An-Egg-" "ArtiFact")
@@ -33,11 +33,11 @@ jobs:
             git -C $sub checkout origin/main
           done
 
-      # 3️ Show current submodule status
+      # 3️⃣ Show submodule status
       - name: Submodule status
         run: git submodule status
 
-      # 4️ Check if submodules changed
+      # 4️⃣ Check if submodules changed
       - name: Check for submodule changes
         id: check_submodules
         run: |
@@ -46,30 +46,40 @@ jobs:
           git diff --submodule=log --ignore-cr-at-eol --exit-code || CHANGES=true
           echo "changes=$CHANGES" >> $GITHUB_OUTPUT
 
-      # 5️ Commit updated submodules and push using PAT
+      # 5️⃣ Commit and push updates safely
       - name: Commit and push updates
         if: steps.check_submodules.outputs.changes == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Create or reset branch safely
+          # Set remote to use PAT BEFORE pushing
+          git remote set-url origin https://x-access-token:$PAT_TOKEN@github.com/${{ github.repository }}.git
+
+          # Create or reset branch
           git checkout -B $PR_BRANCH
           git add .
           git commit -m "$PR_TITLE" || echo "No changes to commit"
 
-          # Use credential helper with PAT to avoid 403
-          git remote set-url origin https://x-access-token:$PAT_TOKEN@github.com/${{ github.repository }}.git
+          # Force push to branch (safe for automated branch)
           git push origin $PR_BRANCH --force
 
-      # 6️ Create Pull Request automatically
+      # 6️⃣ Create Pull Request automatically if none exists
       - name: Create Pull Request
         if: steps.check_submodules.outputs.changes == 'true'
         run: |
+          # Authenticate gh CLI
           gh auth login --with-token <<< "$PAT_TOKEN"
-          gh pr create \
-            --title "$PR_TITLE" \
-            --body "$PR_BODY" \
-            --head $PR_BRANCH \
-            --base main \
-            --repo ${{ github.repository }}
+
+          # Check if PR already exists for the branch
+          EXISTING_PR=$(gh pr list --head $PR_BRANCH --json number --jq '.[0].number')
+          if [ -z "$EXISTING_PR" ]; then
+            gh pr create \
+              --title "$PR_TITLE" \
+              --body "$PR_BODY" \
+              --head $PR_BRANCH \
+              --base main \
+              --repo ${{ github.repository }}
+          else
+            echo "PR already exists: #$EXISTING_PR, skipping creation."
+          fi
