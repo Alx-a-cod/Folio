@@ -9,41 +9,32 @@ jobs:
   check-submodules:
     runs-on: ubuntu-latest
     env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      PAT_TOKEN: ${{ secrets.PAT_TOKEN }}  # Use a personal access token with repo write permissions
 
     steps:
-      # 1️⃣ Checkout Folio without submodules initially
+      # 1️⃣ Checkout Folio without submodules
       - name: Checkout Folio
         uses: actions/checkout@v3
         with:
           submodules: false
           fetch-depth: 0
 
-      # 2️⃣ Initialize submodules if not already initialized, then fetch latest from main
+      # 2️⃣ Initialize submodules and fetch latest main commits
       - name: Update submodules to latest main
         run: |
-          # Ensure each submodule is initialized
-          git submodule init Csharp_Algoritms || echo "Already initialized"
-          git submodule init CodingVault || echo "Already initialized"
-          git submodule init TasteTest || echo "Already initialized"
-          git submodule init An-Egg- || echo "Already initialized"
-          git submodule init ArtiFact || echo "Already initialized"
+          submodules=("Csharp_Algoritms" "CodingVault" "TasteTest" "An-Egg-" "ArtiFact")
+          for sub in "${submodules[@]}"; do
+            git submodule init $sub || echo "$sub already initialized"
+            git submodule update --init --recursive $sub
+            git -C $sub fetch origin main
+            git -C $sub checkout origin/main
+          done
 
-          # Update submodules recursively
-          git submodule update --init --recursive
-
-          # Fetch and checkout latest commit from main branch for each submodule
-          git -C Csharp_Algoritms fetch origin main && git -C Csharp_Algoritms checkout origin/main
-          git -C CodingVault fetch origin main && git -C CodingVault checkout origin/main
-          git -C TasteTest fetch origin main && git -C TasteTest checkout origin/main
-          git -C An-Egg- fetch origin main && git -C An-Egg- checkout origin/main
-          git -C ArtiFact fetch origin main && git -C ArtiFact checkout origin/main
-
-      # 3️⃣ Show current submodule status
+      # 3️⃣ Show submodule status
       - name: Show submodule status
         run: git submodule status
 
-      # 4️⃣ Check for submodule changes (safe version, because LINUX endings, man)
+      # 4️⃣ Check for submodule changes (safe version, because LINUX endings man)
       - name: Check for submodule changes
         id: check_submodules
         run: |
@@ -58,10 +49,7 @@ jobs:
           fi
           echo "changes=$CHANGES" >> $GITHUB_OUTPUT
 
-
-      # 5️⃣ Optional: commit updated submodule references
-      # Keep the step: the workflow will commit and push the updated submodule references automatically.
-      # Remove or disable step: the workflow only warns and logs changes, letting you commit manually.      
+      # 5️⃣ Commit & push updated submodule references automatically with PAT 
       - name: Commit updated submodules
         if: steps.check_submodules.outputs.changes == 'true'
         run: |
@@ -69,4 +57,4 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add .
           git commit -m "Auto-update submodule references" || echo "No changes to commit"
-          git push origin main || echo "Push failed (maybe branch protection)"
+          git push https://$PAT_TOKEN@github.com/Alx-a-cod/Folio.git main
