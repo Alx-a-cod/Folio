@@ -9,17 +9,17 @@ jobs:
   check-submodules:
     runs-on: ubuntu-latest
     env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} #injected automatically as secret as github does his magic
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      # 1️⃣ Checkout Folio with submodules
+      # 1️⃣ Checkout Folio without submodules initially
       - name: Checkout Folio
         uses: actions/checkout@v3
         with:
           submodules: false
-          fetch-depth: 0  # Full history
+          fetch-depth: 0
 
-      # 2️⃣ Initialize each submodule explicitly with URL and main branch
+      # 2️⃣ Initialize submodules if not already initialized, then fetch latest from main
       - name: Update submodules to latest main
         run: |
           # Ensure each submodule is initialized
@@ -39,11 +39,11 @@ jobs:
           git -C An-Egg- fetch origin main && git -C An-Egg- checkout origin/main
           git -C ArtiFact fetch origin main && git -C ArtiFact checkout origin/main
 
-      # 3️⃣ Show submodule status
+      # 3️⃣ Show current submodule status
       - name: Show submodule status
         run: git submodule status
 
-      # 4️⃣ Check for changes
+      # 4️⃣ Check for submodule changes
       - name: Check for submodule changes
         id: check_submodules
         run: |
@@ -55,10 +55,10 @@ jobs:
             echo "All submodules are up to date."
             echo "changes=false" >> $GITHUB_OUTPUT
 
-      # 5️⃣ Optional: commit updated references, 
+      # 5️⃣ Optional: commit updated submodule references
       # Keep the step: the workflow will commit and push the updated submodule references automatically.
       # Remove or disable step: the workflow only warns and logs changes, letting you commit manually.      
-     - name: Commit updated submodules
+      - name: Commit updated submodules
         if: steps.check_submodules.outputs.changes == 'true'
         run: |
           git config user.name "github-actions[bot]"
