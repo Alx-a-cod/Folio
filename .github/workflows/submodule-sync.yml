@@ -5,9 +5,6 @@ on:
     - cron: '0 9 * * *'  # Daily at 09:00 CET
   workflow_dispatch:       # Manual trigger
 
-permissions:
-  contents: write  # Needed if you want to use GITHUB_TOKEN alternatively
-
 jobs:
   check-submodules:
     runs-on: ubuntu-latest
@@ -56,15 +53,16 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git checkout -b $PR_BRANCH
+          # Create or reset branch safely
+          git checkout -B $PR_BRANCH
           git add .
           git commit -m "$PR_TITLE" || echo "No changes to commit"
 
           # Use credential helper with PAT to avoid 403
           git remote set-url origin https://x-access-token:$PAT_TOKEN@github.com/${{ github.repository }}.git
-          git push origin $PR_BRANCH
+          git push origin $PR_BRANCH --force
 
-      # 6️ Create a PR automatically
+      # 6️ Create Pull Request automatically
       - name: Create Pull Request
         if: steps.check_submodules.outputs.changes == 'true'
         run: |
