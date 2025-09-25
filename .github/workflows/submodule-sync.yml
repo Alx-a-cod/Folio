@@ -9,20 +9,21 @@ jobs:
   check-submodules:
     runs-on: ubuntu-latest
     env:
-      PAT_TOKEN: ${{ secrets.PAT_TOKEN }}  # Personal Access Token with repo permissions
+      PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
       PR_BRANCH: submodule-sync-update
       PR_TITLE: "Auto-update submodule references"
       PR_BODY: "This PR updates the submodules to the latest commits from main."
 
     steps:
-      # 1️⃣ Checkout Folio without submodules
+      # 1️ Checkout Folio using PAT
       - name: Checkout Folio
         uses: actions/checkout@v3
         with:
           submodules: false
           fetch-depth: 0
+          token: ${{ secrets.PAT_TOKEN }}
 
-      # 2️⃣ Initialize submodules and fetch latest main commits
+      # 2️ Update submodules
       - name: Update submodules to latest main
         run: |
           submodules=("Csharp_Algoritms" "CodingVault" "TasteTest" "An-Egg-" "ArtiFact")
@@ -33,11 +34,11 @@ jobs:
             git -C $sub checkout origin/main
           done
 
-      # 3️⃣ Show submodule status
+      # 3️ Show submodule status
       - name: Show submodule status
         run: git submodule status
 
-      # 4️⃣ Check for submodule changes
+      # 4️ Check for submodule changes
       - name: Check for submodule changes
         id: check_submodules
         run: |
@@ -46,26 +47,37 @@ jobs:
           git diff --submodule=log --exit-code || CHANGES=true
           echo "changes=$CHANGES" >> $GITHUB_OUTPUT
 
-      # 5️⃣ Commit changes to a new branch and push
-      - name: Commit updated submodules to new branch
+      # 5️ Commit changes to a branch (create or update)
+      - name: Commit updated submodules to branch
         if: steps.check_submodules.outputs.changes == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           
-          git checkout -b $PR_BRANCH
+          # Create branch if missing, else switch
+          if git show-ref --verify --quiet refs/heads/$PR_BRANCH; then
+            git checkout $PR_BRANCH
+          else
+            git checkout -b $PR_BRANCH
+          fi
+
           git add .
           git commit -m "$PR_TITLE" || echo "No changes to commit"
-          git push https://$PAT_TOKEN@github.com/${{ github.repository }} $PR_BRANCH --force
+          git push https://$PAT_TOKEN@github.com/${{ github.repository }} $PR_BRANCH
 
-      # 6️⃣ Create a Pull Request
+      # 6️ Authenticate GH CLI and create PR only if missing
       - name: Create Pull Request
         if: steps.check_submodules.outputs.changes == 'true'
         run: |
-          gh auth login --with-token <<< "$PAT_TOKEN"
-          gh pr create \
-            --title "$PR_TITLE" \
-            --body "$PR_BODY" \
-            --head $PR_BRANCH \
-            --base main \
-            --repo ${{ github.repository }}
+          echo "$PAT_TOKEN" | gh auth login --with-token
+          
+          # Check if PR already exists
+          if ! gh pr list --head $PR_BRANCH --repo ${{ github.repository }} | grep -q "$PR_BRANCH"; then
+            gh pr create \
+              --title "$PR_TITLE" \
+              --body "$PR_BODY" \
+              --head $PR_BRANCH \
+              --base main \
+              --repo ${{ github.repository }}
+          else
+            echo "PR already exists for $PR_BRANCH, skipping creation."
