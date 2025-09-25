@@ -1,36 +1,32 @@
 name: Pro Submodule Sync Checker
 
-#Manual workflow trigger (workflow_dispatch) – you can run it manually from the Actions tab.
-#PAT token usage (PAT_TOKEN) – allows pushing to a new branch safely even with branch protections.
-#Push to a separate branch (submodule-sync-update) instead of forcing main – avoids 403 errors from github-actions[bot].
-#Automatic PR creation – uses the GitHub CLI to open a PR from the update branch to main.
-#Cross-platform diff safety – --ignore-cr-at-eol ensures Windows CRLF vs Linux LF differences don’t trigger false out-of-sync warnings.
-#Safe submodule initialization – explicit git submodule init + recursive update ensures all submodules are properly initialized.
-
 on:
   schedule:
     - cron: '0 9 * * *'  # Daily at 09:00 CET
   workflow_dispatch:       # Manual trigger
 
+permissions:
+  contents: write  # Needed if you want to use GITHUB_TOKEN alternatively
+
 jobs:
   check-submodules:
     runs-on: ubuntu-latest
     env:
-      PAT_TOKEN: ${{ secrets.PAT_TOKEN }}  # Personal Access Token with repo write permissions
+      PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
       PR_BRANCH: submodule-sync-update
       PR_TITLE: "Auto-update submodule references"
       PR_BODY: "This PR updates the submodules to the latest commits from main."
 
     steps:
-      # 1️ Checkout Folio without submodules initially
-      - name: Checkout Folio
+      # 1️ Checkout main repo without submodules
+      - name: Checkout main repo
         uses: actions/checkout@v3
         with:
           submodules: false
           fetch-depth: 0
 
-      # 2️ Initialize submodules and fetch latest commits from main
-      - name: Update submodules to latest main
+      # 2️ Initialize submodules and fetch latest main
+      - name: Update submodules
         run: |
           submodules=("Csharp_Algoritms" "CodingVault" "TasteTest" "An-Egg-" "ArtiFact")
           for sub in "${submodules[@]}"; do
@@ -41,21 +37,20 @@ jobs:
           done
 
       # 3️ Show current submodule status
-      - name: Show submodule status
+      - name: Submodule status
         run: git submodule status
 
-      # 4️ Check for submodule changes (cross-platform safe)
+      # 4️ Check if submodules changed
       - name: Check for submodule changes
         id: check_submodules
         run: |
           set -e
           CHANGES=false
-          # Ignore line ending differences (Windows vs Linux)
           git diff --submodule=log --ignore-cr-at-eol --exit-code || CHANGES=true
           echo "changes=$CHANGES" >> $GITHUB_OUTPUT
 
-      # 5 Commit updated submodules to a new branch and push
-      - name: Commit updated submodules to new branch
+      # 5️ Commit updated submodules and push using PAT
+      - name: Commit and push updates
         if: steps.check_submodules.outputs.changes == 'true'
         run: |
           git config user.name "github-actions[bot]"
@@ -64,9 +59,12 @@ jobs:
           git checkout -b $PR_BRANCH
           git add .
           git commit -m "$PR_TITLE" || echo "No changes to commit"
-          git push https://$PAT_TOKEN@github.com/${{ github.repository }} $PR_BRANCH --force
 
-      # 6️ Create a Pull Request automatically
+          # Use credential helper with PAT to avoid 403
+          git remote set-url origin https://x-access-token:$PAT_TOKEN@github.com/${{ github.repository }}.git
+          git push origin $PR_BRANCH
+
+      # 6️ Create a PR automatically
       - name: Create Pull Request
         if: steps.check_submodules.outputs.changes == 'true'
         run: |
