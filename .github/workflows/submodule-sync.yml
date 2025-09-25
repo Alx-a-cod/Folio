@@ -9,7 +9,10 @@ jobs:
   check-submodules:
     runs-on: ubuntu-latest
     env:
-      PAT_TOKEN: ${{ secrets.PAT_TOKEN }}  # Use a personal access token with repo write permissions
+      PAT_TOKEN: ${{ secrets.PAT_TOKEN }}  # Personal Access Token with repo permissions
+      PR_BRANCH: submodule-sync-update
+      PR_TITLE: "Auto-update submodule references"
+      PR_BODY: "This PR updates the submodules to the latest commits from main."
 
     steps:
       # 1️⃣ Checkout Folio without submodules
@@ -34,27 +37,35 @@ jobs:
       - name: Show submodule status
         run: git submodule status
 
-      # 4️⃣ Check for submodule changes (safe version, because LINUX endings man)
+      # 4️⃣ Check for submodule changes
       - name: Check for submodule changes
         id: check_submodules
         run: |
           set -e
           CHANGES=false
           git diff --submodule=log --exit-code || CHANGES=true
-          if [ "$CHANGES" = true ]; then
-            echo "::warning::One or more submodules are out of sync!"
-            git diff --submodule=log
-          else
-            echo "All submodules are up to date."
-          fi
           echo "changes=$CHANGES" >> $GITHUB_OUTPUT
 
-      # 5️⃣ Commit & push updated submodule references automatically with PAT 
-      - name: Commit updated submodules
+      # 5️⃣ Commit changes to a new branch and push
+      - name: Commit updated submodules to new branch
         if: steps.check_submodules.outputs.changes == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git checkout -b $PR_BRANCH
           git add .
-          git commit -m "Auto-update submodule references" || echo "No changes to commit"
-          git push --force-with-lease https://$PAT_TOKEN@github.com/Alx-a-cod/Folio.git main
+          git commit -m "$PR_TITLE" || echo "No changes to commit"
+          git push https://$PAT_TOKEN@github.com/${{ github.repository }} $PR_BRANCH --force
+
+      # 6️⃣ Create a Pull Request
+      - name: Create Pull Request
+        if: steps.check_submodules.outputs.changes == 'true'
+        run: |
+          gh auth login --with-token <<< "$PAT_TOKEN"
+          gh pr create \
+            --title "$PR_TITLE" \
+            --body "$PR_BODY" \
+            --head $PR_BRANCH \
+            --base main \
+            --repo ${{ github.repository }}
