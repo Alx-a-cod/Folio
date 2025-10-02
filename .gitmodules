@@ -13,3 +13,6 @@
 [submodule "Csharp_Algoritms"]
 	path = Csharp_Algoritms
 	url = https://github.com/Alx-a-cod/Csharp_Algoritms.git
+[submodule "DAL"]
+	path = DAL
+	url = https://github.com/Alx-a-cod/DAL.git
